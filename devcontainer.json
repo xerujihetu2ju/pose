@@ -2,5 +2,6 @@
 	"name": "Multi-container App",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
-		
+	"workspaceFolder": "/workspace",
+
 }
