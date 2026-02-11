@@ -1,0 +1,3 @@
+14:26:13 | signal=516950
+14:26:13 | index2=2259
+14:26:13 | blockhash2=7cb367dea41232ce3ff2fb733c92f07055a4c5d9bfebef6ad2121a07f4cd1dac
