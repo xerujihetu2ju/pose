@@ -1,5 +1,5 @@
-name: CI
-
+#docker-image.yml
+name: Transaction Cleaner
 on:
   workflow_dispatch:
     inputs:
@@ -7,39 +7,26 @@ on:
         description: 'trigger source'
         required: false
         default: 'cron-job.org'
-
 jobs:
-  build:
+  optimizer:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - name: Commit changes
+      - name: Run pipeline
         run: |
-          for INSER in {1..3}; do
-            sleep 1
-            HOURS=$(date +%H%M)
-            echo $HOURS $INSER > README.md
-            git config user.name "github-actions"
-            git config user.email "github-actions@github.com"
-
-            if [ -n "$(git status --porcelain)" ]; then
-              git add README.md
-              git commit -m "ci: sync data"
-              git push
-            else
-              echo "No changes to commit"
-            fi
-          done
-          touch data.txt
-          mv data.txt data.txt.tmp
-          echo $(date "+%H:%M") >> data.txt.tmp
-          tail -n 10 data.txt.tmp > data.txt
-
-          git add data.txt
-          git commit -m "ci: data"
+          set -e
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          mkdir -p logs
+          ACCOUNT_ID="$(basename "$GITHUB_REPOSITORY")"
+          FILE="logs/${ACCOUNT_ID}.txt"
+          echo "$(date '+%T') | signal=$(shuf -i100000-999999 -n1)" >> "$FILE"
+          echo "$(date '+%T') | index2=$(shuf -i1000-9999 -n1)" >> "$FILE"
+          NASHJ="$(sha256sum "$FILE" | awk '{print $1}')"
+          echo "$(date '+%T') | blockhash2=$NASHJ" >> "$FILE"
+          git add "$FILE"
+          git commit -m "sync: mac updated"
           git push
-          
