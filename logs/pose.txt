@@ -583,3 +583,6 @@
 19:06:11 | signal=656673
 19:06:11 | index2=6800
 19:06:11 | blockhash2=5af3e5fcd15c9e560eaff6e358ac30f3372ec5b21a04a0f8855ee143cfdd5d3f
+19:21:27 | signal=484217
+19:21:27 | index2=2706
+19:21:27 | blockhash2=8f72c30e113badacfbff97aed8f8cbcc7f5231fdca9b703df953da6b8c464f1c
